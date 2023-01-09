@@ -38,6 +38,8 @@ build:
     context: src/currencyservice
   - image: cartservice
     context: src/cartservice/src
+  - image: paymentIntegration
+    context: src/paymentIntegration/src
     docker:
       dockerfile: Dockerfile
   - image: frontend
