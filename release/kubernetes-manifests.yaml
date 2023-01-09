@@ -900,7 +900,8 @@ spec:
             memory: 128Mi
         readinessProbe:
             exec:
-                command: ls
+                command: 
+                 - ls
             failureThreshold: 10
             initialDelaySeconds: 180
             periodSeconds: 10
@@ -908,7 +909,8 @@ spec:
             timeoutSeconds: 10
         livenessProbe:
             exec:
-                command: ls
+                command: 
+                 - ls
             failureThreshold: 10
             initialDelaySeconds: 180
             periodSeconds: 10
