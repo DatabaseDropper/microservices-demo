@@ -859,15 +859,15 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paymentIntegration
+  name: paymentintegration
 spec:
   selector:
     matchLabels:
-      app: paymentIntegration
+      app: paymentintegration
   template:
     metadata:
       labels:
-        app: paymentIntegration
+        app: paymentintegration
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -885,7 +885,7 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: paymentIntegration
+        image: paymentintegration
         ports:
         - containerPort: 7070
         env:
@@ -920,11 +920,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentIntegration
+  name: paymentintegration
 spec:
   type: ClusterIP
   selector:
-    app: paymentIntegration
+    app: paymentintegration
   ports:
   - name: grpc
     port: 7373
