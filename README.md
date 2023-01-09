@@ -3,7 +3,7 @@
 </p>
 
 
-![Continuous Integration](https://github.com/GoogleCloudPlatform/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg)
+![Continuous Integration](https://github.com/DatabaseDropper/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg)
 
 **Online Boutique** is a cloud-first microservices demo application.
 Online Boutique consists of an 11-tier microservices application. The application is a
@@ -29,7 +29,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 
 ## Quickstart (GKE)
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fmicroservices-demo&shellonly=true&cloudshell_image=gcr.io/ds-artifacts-cloudshell/deploystack_custom_image)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2FDatabaseDropper%2Fmicroservices-demo&shellonly=true&cloudshell_image=gcr.io/ds-artifacts-cloudshell/deploystack_custom_image)
 
 1. **[Create a Google Cloud Platform project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)** or use an existing project. Set the `PROJECT_ID` environment variable and ensure the Google Kubernetes Engine and Cloud Operations APIs are enabled.
 
@@ -41,7 +41,7 @@ gcloud services enable container.googleapis.com --project ${PROJECT_ID}
 2. **Clone this repository.**
 
 ```
-git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
+git clone https://github.com/DatabaseDropper/microservices-demo.git
 cd microservices-demo
 ```
 
