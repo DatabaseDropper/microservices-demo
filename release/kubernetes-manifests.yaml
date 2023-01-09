@@ -887,7 +887,7 @@ spec:
           readOnlyRootFilesystem: true
         image: paymentintegration
         ports:
-        - containerPort: 7070
+        - containerPort: 7373
         env:
         - name: REDIS_ADDR
           value: "redis-cart:6379"

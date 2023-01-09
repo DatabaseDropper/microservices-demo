@@ -15,11 +15,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0@sha256:7864257426b137231c0cf13cee1261c2b029f879ebcacea077de631404ba6447 AS build
 WORKDIR /app
 COPY . .
-RUN dotnet restore paymentIntegration.csproj
-RUN dotnet build "./paymentIntegration.csproj" -c Debug -o /out
+RUN dotnet restore paymentintegration.csproj
+RUN dotnet build "./paymentintegration.csproj" -c Debug -o /out
 
 FROM build AS publish
-RUN dotnet publish paymentIntegration.csproj -c Debug -o /out
+RUN dotnet publish paymentintegration.csproj -c Debug -o /out
 
 # Building final image used in running container
 FROM mcr.microsoft.com/dotnet/aspnet:7.0@sha256:00c2cfd910760eac2f1e2656bfb2db14937d73cd1858abae131046ad65a926b2 AS final
@@ -34,4 +34,4 @@ WORKDIR /app
 COPY --from=publish /out .
 ENV ASPNETCORE_URLS=http://*:7373
 
-ENTRYPOINT ["dotnet", "paymentIntegration.dll"]
+ENTRYPOINT ["dotnet", "paymentintegration.dll"]
