@@ -13,12 +13,12 @@
 # limitations under the License.
 
 # https://mcr.microsoft.com/v2/dotnet/sdk/tags/list
-FROM mcr.microsoft.com/dotnet/sdk:7.0.101@sha256:7864257426b137231c0cf13cee1261c2b029f879ebcacea077de631404ba6447 as builder
+FROM mcr.microsoft.com/dotnet/sdk:7.0 as builder
 WORKDIR /app
 COPY paymentintegration.csproj .
 RUN dotnet restore paymentintegration.csproj -r linux-musl-x64
 COPY . .
-RUN dotnet publish paymentintegration.csproj -p:PublishSingleFile=true -r linux-musl-x64 --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link -c release -o /paymentintegration --no-restore
+RUN dotnet publish paymentintegration.csproj -r linux-musl-x64 -c release -o /paymentintegration --no-restore
 
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 FROM mcr.microsoft.com/dotnet/runtime-deps:7.0.1-alpine3.16-amd64@sha256:3674a509a2735aaaeef7ba9438d8fc0ba02d0b303fbeaf8b1a27669f08327f1b as without-grpc-health-probe-bin
