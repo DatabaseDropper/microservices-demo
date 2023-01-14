@@ -5,20 +5,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.MapGet("/check_credit_card", async (HttpContext context) =>
+app.MapGet("/payu", async (HttpContext context) =>
 {
-    var random = new Random().Next(1, 3);
-
-    if (random == 1)
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.OK;
-        return "OK";
-    }
-    else
-    {
-        context.Response.StatusCode = (int)HttpStatusCode.PaymentRequired;
-        return "ERROR";
-    }
+    var data = await context.Request.ReadFromJsonAsync<dynamic>();
+    Console.WriteLine(data);
+    context.Response.StatusCode = (int)HttpStatusCode.OK;
+    return "OK";
 });
 
 app.UseHttpsRedirection();
