@@ -228,7 +228,7 @@
                         );
                         }
 
-                        function processForm(e) {
+                        async function processForm(e) {
                             if (e.preventDefault) e.preventDefault();
 
                             var price = getElementByXpath("/html/body/main/section/div/div[1]/div[2]/div[2]/div[3]/div[2]/strong").innerText
@@ -247,7 +247,7 @@
                             const content = await rawResponse.json();
                             console.log(content);
 
-                            return true;
+                            return false;
                         }
 
                         var form = document.getElementById('myForm123');
