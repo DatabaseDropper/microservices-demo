@@ -5,7 +5,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.MapGet("/payu", async (HttpContext context) =>
+app.MapPost("/payu", async (HttpContext context) =>
 {
     var data = await context.Request.ReadFromJsonAsync<dynamic>();
     Console.WriteLine(data);
