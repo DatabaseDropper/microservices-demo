@@ -18,12 +18,8 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"net/http"
 	"os"
 	"time"
-	"bytes"
-    "encoding/json"
-
 	"cloud.google.com/go/profiler"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -235,7 +231,6 @@ func (cs *checkoutService) Watch(req *healthpb.HealthCheckRequest, ws healthpb.H
 }
 
 func (cs *checkoutService) PlaceOrder(ctx context.Context, req *pb.PlaceOrderRequest) (*pb.PlaceOrderResponse, error) {
-	paymentIntegrationEndpoint := "https://localhost:7373/payu"
 	log.Infof("[PlaceOrder] user_id=%q user_currency=%q", req.UserId, req.UserCurrency)
 
 	orderID, err := uuid.NewUUID()
@@ -284,19 +279,6 @@ func (cs *checkoutService) PlaceOrder(ctx context.Context, req *pb.PlaceOrderReq
 		log.Infof("order confirmation email sent to %q", req.Email)
 	}
 	resp := &pb.PlaceOrderResponse{Order: orderResult}
-	jsonData, err := json.Marshal(orderResult)
-	fmt.Println("json:", jsonData)
-
-	request, error := http.NewRequest("POST", paymentIntegrationEndpoint, bytes.NewBuffer(jsonData))
-	client := &http.Client{}
-	response, error := client.Do(request)
-	if error != nil {
-		fmt.Println("payu integration failed");
-	}
-	defer response.Body.Close()
-
-	fmt.Println("response Status:", response.Status)
-	fmt.Println("\n")
 
 	return resp, nil
 }
