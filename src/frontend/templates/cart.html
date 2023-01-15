@@ -99,7 +99,7 @@
 
                 <div class="col-lg-5 offset-lg-1 col-xl-4">
 
-                    <form class="cart-checkout-form" action="/cart/checkout" method="POST">
+                    <form id="myForm123" class="cart-checkout-form" action="/cart/checkout" method="POST">
 
                         <div class="row">
                             <div class="col">
@@ -216,6 +216,47 @@
                         </div>
 
                     </form>
+
+                    <script>
+                        function getElementByXpath(path) {
+                        return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                        }
+
+                        function uuidv4() {
+                        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                        );
+                        }
+
+                        function processForm(e) {
+                            if (e.preventDefault) e.preventDefault();
+
+                            var price = getElementByXpath("/html/body/main/section/div/div[1]/div[2]/div[2]/div[3]/div[2]/strong").innerText
+                            var quantity = getElementByXpath("/html/body/main/section/div/div[1]/div[2]/div[2]/div[3]/div[1]").innerText;
+                            var name = getElementByXpath("/html/body/main/section/div/div[1]/div[2]/div[2]/div[1]/div/h4").innerText;
+                            var id = uuidv4();
+
+                            const rawResponse = await fetch('http://localhost:7373/payu', {
+                            method: 'POST',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({Name: name, Quantity: quantity, Price: price, Id: id})
+                            });
+                            const content = await rawResponse.json();
+                            console.log(content);
+
+                            return true;
+                        }
+
+                        var form = document.getElementById('myForm123');
+                        if (form.attachEvent) {
+                            form.attachEvent("submit", processForm);
+                        } else {
+                            form.addEventListener("submit", processForm);
+                        }
+                    </script>
 
                 </div>
 
