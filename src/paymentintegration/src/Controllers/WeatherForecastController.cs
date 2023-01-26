@@ -42,8 +42,8 @@ public class WeatherForecastController : ControllerBase
             new Product
             {
                 name = data.Name,
-                quantity = data.Quantity.ToString(),
-                unitPrice = data.Price.ToString()
+                quantity = data.Quantity,
+                unitPrice = data.Price
             }
         }
         };
@@ -88,7 +88,7 @@ public class Product
 public class Input
 {
     public string Name { get; set; }
-    public int Quantity { get; set; }
-    public int Price { get; set; }
+    public string Quantity { get; set; }
+    public string Price { get; set; }
     public string Id { get; set; }
 }
