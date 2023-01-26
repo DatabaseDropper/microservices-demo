@@ -1,18 +1,16 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
-using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 var app = builder.Build();
-app.UseCors(x => x
-          .AllowAnyMethod()
-          .AllowAnyHeader()
-          .SetIsOriginAllowed(origin => true) // allow any origin
-                                              //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
-          .AllowCredentials()); // allow credentials
+
+app.UseHttpsRedirection();
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseAuthorization();
+app.UseRouting();
 
 app.MapGet("/payu", async (HttpContext context) =>
 {
@@ -22,7 +20,7 @@ app.MapGet("/payu", async (HttpContext context) =>
 
 app.MapPost("/payu", async (HttpContext context) =>
 {
-    var data = await context.Request.ReadFromJsonAsync<dynamic>();
+    var data = await context.Request.ReadFromJsonAsync<Input>();
     Console.WriteLine("data: " + data);
     var client = new RestClient("https://secure.snd.payu.com/");
     var request = new RestRequest("api/v2_1/orders", Method.Post);
@@ -51,8 +49,8 @@ app.MapPost("/payu", async (HttpContext context) =>
             new Product
             {
                 name = data.Name,
-                quantity = data.Quantity,
-                unitPrice = data.Price
+                quantity = data.Quantity.ToString(),
+                unitPrice = data.Price.ToString()
             }
         }
     };
@@ -66,12 +64,7 @@ app.MapPost("/payu", async (HttpContext context) =>
     return JsonConvert.SerializeObject(new { Url = response.ResponseUri });
 });
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
 app.Run();
-
-
 
 public class Rootobject
 {
@@ -100,4 +93,13 @@ public class Product
     public string name { get; set; }
     public string unitPrice { get; set; }
     public string quantity { get; set; }
+}
+
+
+public class Input
+{
+    public string Name { get; set; }
+    public int Quantity { get; set; }
+    public int Price { get; set; }
+    public string Id { get; set; }
 }
