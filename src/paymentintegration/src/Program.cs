@@ -9,6 +9,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+            policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         });
 });
 builder.Services.AddControllers();
