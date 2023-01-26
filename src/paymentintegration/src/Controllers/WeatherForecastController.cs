@@ -27,7 +27,6 @@ public class WeatherForecastController : ControllerBase
             merchantPosId = "459927",
             description = "RTV market",
             currencyCode = "PLN",
-            totalAmount = "1500",
             extOrderId = data.Id,
             buyer = new Buyer
             {
@@ -42,17 +41,32 @@ public class WeatherForecastController : ControllerBase
             new Product
             {
                 name = data.Name,
-                quantity = data.Quantity,
-                unitPrice = data.Price
+                quantity = string.Join("", data.Quantity.Where(x => char.IsDigit(x))),
+                unitPrice = string.Join("", data.Price.Where(x => char.IsDigit(x))),
             }
         }
         };
 
+        var sum = 0m;
+
+        foreach (var item in obj.products)
+        {
+            sum += Convert.ToDecimal(item.unitPrice) * Convert.ToDecimal(item.quantity);
+        }
+
+        obj.totalAmount = sum.ToString();
         client.Options.FollowRedirects = false;
         request.AddJsonBody(obj);
-        var response = await client.PostAsync(request);
-        Console.WriteLine(response.ResponseUri);
-        return Ok(new { Url = response.ResponseUri });
+        try
+        {
+            var response = await client.PostAsync(request);
+            Console.WriteLine(response.ResponseUri);
+            return Ok(new { Url = response.ResponseUri });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest();
+        }
     }
 }
 
