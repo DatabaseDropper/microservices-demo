@@ -38,7 +38,7 @@ app.MapPost("/payu", async (HttpContext context) =>
         extOrderId = data.Id,
         buyer = new Buyer
         {
-            email = "john.doe@example.com",
+            email = "student.ath@ath.com",
             phone = "654111654",
             firstName = "kowalski ath",
             lastName = "ath miodek",
