@@ -247,7 +247,7 @@
                             const content = await rawResponse.json();
                             console.log(content);
                             var objJson = JSON.parse(content);
-                            window.location.replace(objJson.Url);
+                            window.location.replace(objJson.url);
                             return false;
                         }
 
